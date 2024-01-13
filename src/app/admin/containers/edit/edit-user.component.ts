@@ -92,7 +92,7 @@ export class EditUserComponent implements OnInit {
               ? "manage-users"
               : roles?.find((role) => role.name === env.keycloak.managerRole)
               ? "view-users"
-              : "",
+              : "regular",
           });
         }
       });
