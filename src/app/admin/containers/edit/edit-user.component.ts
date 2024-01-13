@@ -14,7 +14,7 @@ import {
   isManager,
 } from "../../../state/auth/auth.selectors";
 import { AuthActions } from "../../../state/auth/auth.actions";
-import { environment } from "../../../../environments/environment";
+import { environment as env } from "../../../../environments/environment";
 import { MatDialog } from "@angular/material/dialog";
 import { ModalComponentDialog } from "../../../../shared/components/modal/modal.component";
 import {
@@ -35,6 +35,7 @@ export class EditUserComponent implements OnInit {
   user$: Observable<UserPayload | undefined>;
   isAdmin$: Observable<boolean | undefined>;
   isManager$: Observable<boolean | undefined>;
+  superAdmin = false;
 
   // Service for managing component destruction lifecycle
   private readonly destroy$ = injectDestroyService();
@@ -78,19 +79,22 @@ export class EditUserComponent implements OnInit {
       .select(getCurrentViewRoles)
       .pipe(delay(100), takeUntil(this.destroy$))
       .subscribe((roles) => {
-        this.userForm.patchValue({
-          selectedRole: roles?.find(
-            (role) =>
-              role.name === environment.keycloak.adminRole ||
-              role.name === "realm-admin"
-          )
-            ? "manage-users"
-            : roles?.find(
-                (role) => role.name === environment.keycloak.managerRole
-              )
-            ? "view-users"
-            : "",
-        });
+        if (roles) {
+          this.superAdmin = roles.some(
+            (role) => role.name === env.keycloak.superAdminRole
+          );
+          this.userForm.patchValue({
+            selectedRole: roles.find(
+              (role) =>
+                role.name === env.keycloak.adminRole ||
+                role.name === env.keycloak.superAdminRole
+            )
+              ? "manage-users"
+              : roles?.find((role) => role.name === env.keycloak.managerRole)
+              ? "view-users"
+              : "",
+          });
+        }
       });
 
     // Set initial state of editMode

@@ -62,9 +62,11 @@ export class UsersListComponent implements OnInit {
     });
 
     // Check if the user is a regular user or a manager
-    this.regularUser = !this.keycloak
-      .getUserRoles()
-      .includes(environment.keycloak.managerRole);
+    this.regularUser =
+      !this.keycloak
+        .getUserRoles()
+        .includes(environment.keycloak.managerRole) &&
+      !this.keycloak.getUserRoles().includes(environment.keycloak.adminRole);
   }
 
   // Lifecycle hook called after the view is initialized

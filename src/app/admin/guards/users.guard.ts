@@ -17,7 +17,8 @@ export class UsersGuard implements CanActivate {
 
     // Check if the user has the manager role
     if (
-      this.keycloak.getUserRoles().includes(environment.keycloak.managerRole)
+      this.keycloak.getUserRoles().includes(environment.keycloak.managerRole) ||
+      this.keycloak.getUserRoles().includes(environment.keycloak.adminRole)
     ) {
       // Dispatch actions to load users and get user roles
       this.store.dispatch(UserActions.loadUsers());

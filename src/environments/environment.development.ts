@@ -11,6 +11,7 @@ export const environment = {
     clientForRoleID: "462ccaf8-320e-49c5-8790-8e1c6e741207",
     managerRole: "view-users",
     adminRole: "manage-users",
+    superAdminRole: "realm-admin",
   },
   getTokenAPI:
     "https://keycloak-tt-keycloak-stage.apps.ocp.thingstalk.eu/realms/test-realm2/protocol/openid-connect/token",

@@ -4,6 +4,7 @@ import {
   BehaviorSubject,
   Observable,
   catchError,
+  concat,
   map,
   of,
   switchMap,
@@ -117,12 +118,35 @@ export class UsersService {
         rest
       );
 
+    if (roleName === "regular") {
+      const httpOptions = {
+        headers: new HttpHeaders({ "Content-Type": "application/json" }),
+      };
+      const deleteRequest = this.http.delete<void>(
+        `${this.baseUrl}/users/${updatedUser.id}/role-mappings/clients/${env.keycloak.clientForRoleID}`,
+        httpOptions
+      );
+
+      const updateRequest = this.http.put<void>(
+        `${this.baseUrl}/users/${updatedUser.id}`,
+        rest
+      );
+
+      // Combine the delete and update requests
+      return concat(deleteRequest, updateRequest).pipe(
+        catchError((error) => {
+          console.error("Error during delete or update:", error);
+          throw error;
+        })
+      );
+    }
+
     return this.http
       .put<void>(`${this.baseUrl}/users/${updatedUser.id}`, rest)
       .pipe(
-        switchMap((createdUser: any) => {
-          return this.assignRealmRole(updatedUser?.id!, roleName as string);
-        })
+        switchMap(() =>
+          this.assignRealmRole(updatedUser?.id!, roleName as string)
+        )
       );
   }
 

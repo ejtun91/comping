@@ -36,8 +36,9 @@
                 <input matInput placeholder="Last Name" name="lastName" formControlName="lastName">
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label>Select Role:</mat-label>
+                <mat-label>Select Role: (OPTIONAL)</mat-label>
                 <mat-select name="selectedRole" formControlName="selectedRole">
+                    <mat-option value="regular">Regular</mat-option>
                     <mat-option value="view-users">Manager Observer</mat-option>
                     <mat-option value="manage-users">Users Admin</mat-option>
                 </mat-select>

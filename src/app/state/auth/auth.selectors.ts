@@ -16,7 +16,7 @@ export const isAdmin = createSelector(getAuthState, (currentUser) => {
     currentUser.currentUser?.roles?.some(
       (role) =>
         role.name == environment.keycloak.adminRole ||
-        role.name == "realm-admin"
+        role.name == environment.keycloak.superAdminRole
     ) || false
   );
 });

@@ -24,6 +24,7 @@ The application supports two primary roles: Admin and Manager. Additionally, the
 ### Admin
 
 - Can perform CRUD operations on users.
+- REALM-ADMIN Cannot be deleted while USER ADMIN can.
 
 ### Manager
 
