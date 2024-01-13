@@ -1,0 +1,11 @@
+<div class="nav-container flex shadow-sm items-center justify-between h-[50px] mb-4 px-2">
+    <div class="left">
+        <button (click)="downloadPDF()" mat-raised-button class="self-end">Download PDF</button>
+    </div>
+    <img routerLink="/admin" class="w-[155px] cursor-pointer"
+        src="https://www.comping.hr/logo_comping1.205926a315b5b11d.svg" alt="">
+    <div class="right flex gap-2 items-center">
+        <span>Hello, {{(profile | async)?.username}}</span>
+        <button (click)="logout()" mat-raised-button class="self-end">Logout</button>
+    </div>
+</div>

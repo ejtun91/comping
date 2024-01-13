@@ -1,0 +1,52 @@
+<div class="new-customer container mx-auto min-h-[80vh] lg:px-24 2xl:px-40">
+    <div class="title text-[1.5em]">Create a new User</div>
+    <div class="breadcrumb flex align-middle justify-between">
+        <div class="left flex gap-4 py-6 text-[14px]">
+            <span routerLink="/admin" class="hover:text-[#f67c32] cursor-pointer">Users</span>
+            <span>&#8226;</span> <span class="text-gray-400">New User</span>
+        </div>
+    </div>
+    <form class="formwidth body rounded-xl flex flex-wrap gap-8" (ngSubmit)="onSubmit()" [formGroup]="userForm">
+        <div
+            class="rounded-xl p-6 flex flex-col gap-8 w-full shadow-[0_0_2px_0_rgba(145,158,171,0.2),0_12px_24px_-4px_rgba(145,158,171,0.12)]">
+            <div class="field w-full"> <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Username</mat-label>
+                    <input matInput placeholder="Username" name="username" formControlName="username">
+                </mat-form-field> <small class="error text-red-500 block">{{
+                    errorUtil.showErrors('username', userForm, submitted)
+                    }}</small></div>
+            <div class="field w-full"> <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" type="email" name="email" formControlName="email">
+                </mat-form-field> <small class="error text-red-500 block">{{
+                    errorUtil.showErrors('email', userForm, submitted)
+                    }}</small></div>
+            <div class="field w-full"> <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password" type="password" name="password" formControlName="password">
+                </mat-form-field> <small class="error text-red-500 block">{{
+                    errorUtil.showErrors('password', userForm, submitted)
+                    }}</small></div>
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput placeholder="First Name" name="firstName" formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Last Name" name="lastName" formControlName="lastName">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Role:</mat-label>
+                <mat-select name="selectedRole" formControlName="selectedRole">
+                    <mat-option value="view-users">Manager Observer</mat-option>
+                    <mat-option value="manage-users">Users Admin</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="flex items-center justify-between">
+                <button routerLink="/admin" color="primary" type="button" mat-raised-button class="">Back</button>
+                <button *ngIf="isAdmin$ | async" type="submit" mat-raised-button
+                    class="!bg-green-500 !text-white">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
